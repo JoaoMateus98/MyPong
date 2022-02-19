@@ -3,8 +3,10 @@ from Opponent import OpponentBehavior
 from Player import PlayerBehavior
 from Ball import BallBehavior
 from Score import ScoreTracker
+from pygame import mixer
 
 pygame.init()
+mixer.init()
 
 # constants
 SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -22,6 +24,9 @@ score_tracker = ScoreTracker(SCREEN)
 winner = False
 running = True
 
+mixer.music.load('PongBackground.wav')
+mixer.music.play(-1)
+game_over_sound = mixer.Sound('PongGameOver.wav')
 
 # main loop
 def main():
@@ -93,16 +98,18 @@ def draw_window():
 def check_winner():
     global winner
 
-    font = pygame.font.SysFont("Times New Roman", int(SCREEN.get_height() / 15))
+    font = pygame.font.SysFont("5Computers In Love", int(SCREEN.get_height() / 20))
     player_1_wins_surface = font.render("Player 1 Wins!", True, WHITE)
     player_2_wins_surface = font.render("Player 2 Wins!", True, WHITE)
 
     if ScoreTracker.player_score == 15:
         SCREEN.blit(player_1_wins_surface, (SCREEN.get_width() / 10, SCREEN.get_height() / 3))
+        game_over_sound.play()
         winner = True
 
     if ScoreTracker.opponent_score == 15:
-        SCREEN.blit(player_2_wins_surface, (SCREEN.get_width() / 1.7, SCREEN.get_height() / 3))
+        SCREEN.blit(player_2_wins_surface, (SCREEN.get_width() / 1.9, SCREEN.get_height() / 3))
+        game_over_sound.play()
         winner = True
 
 

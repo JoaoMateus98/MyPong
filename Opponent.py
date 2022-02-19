@@ -1,5 +1,5 @@
 import pygame
-
+from Ball import BallBehavior
 
 class OpponentBehavior:
     WHITE = (255, 255, 255)
@@ -20,10 +20,32 @@ class OpponentBehavior:
         pygame.draw.rect(self.screen, OpponentBehavior.WHITE, self.opponent_rect)
         OpponentBehavior.opponent_rect = self.opponent_rect
 
+    # "A.I"
     def move_opponent(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w] and OpponentBehavior.opponent_y > self.screen.get_height() / 10:
-            OpponentBehavior.opponent_y -= self.velocity
-        if keys[pygame.K_s] and OpponentBehavior.opponent_y < self.screen.get_height() - (self.screen.get_height() / 15 + 25):
-            OpponentBehavior.opponent_y += self.velocity
+        if BallBehavior.ball_x > self.screen.get_width() / 2:
+            if BallBehavior.ball_y > OpponentBehavior.opponent_y:
+                if BallBehavior.ball_x < self.screen.get_width() * .75 and BallBehavior.ball_y > self.screen.get_height() * .75 and OpponentBehavior.opponent_y < self.screen.get_height() * .5:
+                    OpponentBehavior.opponent_y += BallBehavior.opponent_speed * 1.75
+                if BallBehavior.ball_x > self.screen.get_width() * .8 and abs(BallBehavior.ball_y - OpponentBehavior.opponent_y) > self.screen.get_height() * .05:
+                    OpponentBehavior.opponent_y += BallBehavior.opponent_speed * 1.75
+                elif BallBehavior.ball_x < self.screen.get_width() * .75:
+                    OpponentBehavior.opponent_y += BallBehavior.opponent_speed * .8
+                else:
+                    OpponentBehavior.opponent_y += BallBehavior.opponent_speed
+            elif BallBehavior.ball_y < OpponentBehavior.opponent_y:
+                if BallBehavior.ball_x < self.screen.get_width() * .75 and BallBehavior.ball_y < self.screen.get_height() * .25 and OpponentBehavior.opponent_y > self.screen.get_height() * .5:
+                    OpponentBehavior.opponent_y -= BallBehavior.opponent_speed * 1.75
+                if BallBehavior.ball_x > self.screen.get_width() * .8 and abs(BallBehavior.ball_y - OpponentBehavior.opponent_y) > self.screen.get_height() * .05:
+                    OpponentBehavior.opponent_y -= BallBehavior.opponent_speed * 1.75
+                elif BallBehavior.ball_x < self.screen.get_width() * .75:
+                    OpponentBehavior.opponent_y -= BallBehavior.opponent_speed * .8
+                else:
+                    OpponentBehavior.opponent_y -= BallBehavior.opponent_speed
+        elif BallBehavior.ball_x < self.screen.get_width() * .33:
+            if BallBehavior.ball_y > OpponentBehavior.opponent_y:
+                OpponentBehavior.opponent_y += BallBehavior.opponent_speed
+            elif BallBehavior.ball_y < OpponentBehavior.opponent_y:
+                OpponentBehavior.opponent_y -= BallBehavior.opponent_speed
+
+
 

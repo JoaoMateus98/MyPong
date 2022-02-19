@@ -16,7 +16,7 @@ class ScoreTracker:
 
     def __init__(self, screen):
         self.screen = screen
-        self.font = pygame.font.SysFont("Times New Roman", int(screen.get_height() / 15))
+        self.font = pygame.font.SysFont("5Computers In Love", int(screen.get_height() / 17))
         self.player_score_surface = self.font.render(str(ScoreTracker.player_score), True, ScoreTracker.WHITE)
         self.opponent_score_surface = self.font.render(str(ScoreTracker.opponent_score), True, ScoreTracker.WHITE)
 
