@@ -66,8 +66,6 @@ class BallBehavior:
         self.player_rect = player_rect
         self.opponent_rect = opponent_rect
 
-        print("player pos = ", BallBehavior.ball_y, "top = ", self.screen_top, "bottom =", self.screen_bottom)
-
         ball_rect = pygame.draw.circle(self.screen, BallBehavior.WHITE, (BallBehavior.ball_x, BallBehavior.ball_y),
                                        self.radius)
 

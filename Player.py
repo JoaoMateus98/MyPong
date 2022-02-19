@@ -2,10 +2,15 @@ import pygame
 
 pygame.joystick.init()
 
+
 class PlayerBehavior:
     WHITE = (255, 255, 255)
     player_y = None
     player_rect = None
+
+    joysticks = [pygame.joystick.Joystick(x) for x in range (pygame.joystick.get_count())]
+    for joystick in joysticks:
+        joystick.init()
 
     def __init__(self, screen):
         self.player_rect = None
@@ -17,7 +22,8 @@ class PlayerBehavior:
         self.player_height = screen.get_height() / 15
 
     def draw_to_screen(self):
-        self.player_rect = pygame.rect.Rect(self.player_x, PlayerBehavior.player_y, self.player_width, self.player_height)
+        self.player_rect = pygame.rect.Rect(self.player_x, PlayerBehavior.player_y, self.player_width,
+                                            self.player_height)
         PlayerBehavior.player_rect = self.player_rect
         pygame.draw.rect(self.screen, PlayerBehavior.WHITE, self.player_rect)
 
@@ -28,12 +34,13 @@ class PlayerBehavior:
             hat = joystick.get_hat(0)
             if hat == (0, 1) and PlayerBehavior.player_y > self.screen.get_height() / 10:
                 PlayerBehavior.player_y -= self.velocity
-            if hat == (0, -1) and PlayerBehavior.player_y < self.screen.get_height() - (self.screen.get_height() / 15 + 25):
+            if hat == (0, -1) and PlayerBehavior.player_y < self.screen.get_height() - (
+                    self.screen.get_height() / 15 + 25):
                 PlayerBehavior.player_y += self.velocity
 
         keys = pygame.key.get_pressed()
-        print(keys)
         if keys[pygame.K_UP] and PlayerBehavior.player_y > self.screen.get_height() / 10:
             PlayerBehavior.player_y -= self.velocity
-        if keys[pygame.K_DOWN] and PlayerBehavior.player_y < self.screen.get_height() - (self.screen.get_height() / 15 + 25):
+        if keys[pygame.K_DOWN] and PlayerBehavior.player_y < self.screen.get_height() - (
+                self.screen.get_height() / 15 + 25):
             PlayerBehavior.player_y += self.velocity
